@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Signup page</title>
+</head>
+
+<body>
+    <div class="head">
+        <div class="head-content">
+            <h1>Sign Up</h1>
+        </div>
+        <div class="form">
+            <form action="/signup" method="POST" class="signup-page">
+                <div class="signup-page-content">
+                    <label class="label">Name</label>
+                    <br>
+                    <input class="input" type="text" id="name" name="name" placeholder="name" required>
+                    <br>
+                    <br>
+                    <label class="label">Email</label>
+                    <br>
+                    <input class="input" type="text" id="email" name="mail" placeholder="email" required>
+                    <br>
+                    <br>
+                    <label class="label">Password</label>
+                    <br>
+                    <input class="input" type="password" placeholder="password" required>
+                    <br>
+                    <br>
+                    <label class="label">Role</label>
+                    <br>
+                    <select name="role" id="role">
+                        <option value="manager">Manager</option>
+                        <option value="chef">Chef</option>
+                    </select>
+                    <div class="signup-page-input">
+                        <br>
+                        <div class="control">
+                            <button type="submit" class="button is-link">Signup</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
