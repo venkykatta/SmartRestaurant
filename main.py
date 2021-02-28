@@ -16,30 +16,30 @@ def signup_page():
 
 
 @app.route("/signup", methods=["POST"])
-def manager_page():
+def signup_data():
 
     role = request.form["role"]
     if role == "manager":
             if request.method == "POST":
                 user_data = request.form
-                Name = user_data['name']
+                naame = user_data['name']
                 email = user_data['mail']
-                Password = user_data['password']
-                Role = user_data['role']
+                password = user_data['password']
+                role = user_data['role']
                 cur = mysql.connection.cursor()
-                cur.execute("INSERT INTO SignUp(Name, email, Password, Role) VALUES(%s, %s, %s, %s)", (Name, email, Password, Role))
+                cur.execute("INSERT INTO SignUp(name, email, password, role) VALUES(%s, %s, %s, %s)", (name, email, password, role))
                 mysql.connection.commit()
                 cur.close()
                 return render_template("manager.html")
     else:
         if request.method == "POST":
             user_data = request.form
-            Name = user_data['name']
+            name = user_data['name']
             email = user_data['mail']
-            Password = user_data['password']
-            Role = user_data['role']
+            password = user_data['password']
+            role = user_data['role']
             cur = mysql.connection.cursor()
-            cur.execute("INSERT INTO SignUp(Name, email, Password, Role) VALUES(%s, %s, %s, %s)", (Name, email, Password, Role))
+            cur.execute("INSERT INTO SignUp(name, email, password, role) VALUES(%s, %s, %s, %s)", (name, email, password, role))
             mysql.connection.commit()
             cur.close()
             return render_template("chef.html")
