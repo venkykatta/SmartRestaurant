@@ -1,7 +1,11 @@
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 from flask_mysqldb import MySQL
+import MySQLdb.cursors
  
 app = Flask(__name__)
+
+
+app.secret_key = "secret"
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
@@ -22,7 +26,7 @@ def signup_data():
     if role == "manager":
             if request.method == "POST":
                 user_data = request.form
-                naame = user_data['name']
+                name = user_data['name']
                 email = user_data['mail']
                 password = user_data['password']
                 role = user_data['role']
@@ -43,6 +47,37 @@ def signup_data():
             mysql.connection.commit()
             cur.close()
             return render_template("chef.html")
+
+@app.route("/login", methods=['POST', 'GET'])
+def login_data():
+    msg = ""
+    if request.method == 'POST' and 'name' in request.form and 'password' in request.form:
+        name = request.form['name']
+        password = request.form['password']
+        role = request.form['role']
+
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute(
+            "SELECT * FROM SignUp WHERE name = % s AND password = % s AND role = %s",
+            (
+                name,
+                password,
+                role,
+            ),
+        )
+        account = cursor.fetchone()
+        if account:
+            session['loggedin'] = True
+            session['name'] = account['name']
+            msg = "logged in successfully!"
+            if role == "manager":
+                return render_template('manager.html', msg=msg)
+            else:
+                msg = "logged in successfully!"
+                return render_template('chef.html', msg=msg)
+        else:
+            msg = 'Incorrect name and password!'
+    return render_template("login.html", msg=msg)
 
 
 if __name__ == "__main__":
